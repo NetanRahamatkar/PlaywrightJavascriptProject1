@@ -1,37 +1,39 @@
 import { test, expect } from '@playwright/test'
 
-test('login', async ({ page }) => {
-
-    await page.goto('https://www.saucedemo.com/');
-    await page.locator('[data-test="username"]').fill('standard_user');
-    await page.locator('[data-test="password"]').fill('secret_sauce');
-    await page.locator('[data-test="login-button"]').click();
-    await page.close();
-
-})
 
 
-test('homepage', async ({ page }) => {
-
-    await page.goto('https://www.saucedemo.com/');
-    await page.locator('[data-test="username"]').fill('standard_user');
-    await page.locator('[data-test="password"]').fill('secret_sauce');
-    await page.locator('[data-test="login-button"]').click();
-    await page.locator('[data-test="add-to-cart-sauce-labs-backpack"]').click();
-    await page.locator('[data-test="add-to-cart-sauce-labs-bike-light"]').click();
-    await page.locator('[data-test="item-1-title-link"]').click();
-    await page.locator('[data-test="add-to-cart"]').click();
-    await page.close();
-
-})
+test.describe('All My Tests', () => {
 
 
-test.only('logout', async({page}) => {
+    test.beforeEach(async ({ page }) => {
+        await page.goto('https://www.saucedemo.com/');
+        await page.locator('[data-test="username"]').fill('standard_user');
+        await page.locator('[data-test="password"]').fill('secret_sauce');
+        await page.locator('[data-test="login-button"]').click();
+        await page.getByText('Swag Labs').click();
+    })
 
-     await page.goto('https://www.saucedemo.com/');
-    await page.locator('[data-test="username"]').fill('standard_user');
-    await page.locator('[data-test="password"]').fill('secret_sauce');
-    await page.locator('[data-test="login-button"]').click();
-    await page.pause();
-    
+    // test.afterAll(async({page}) => {
+
+    // })
+
+
+    test('homepage', async ({ page }) => {
+
+        await page.locator('[data-test="add-to-cart-sauce-labs-backpack"]').click();
+        await page.locator('[data-test="add-to-cart-sauce-labs-bike-light"]').click();
+        await page.locator('[data-test="item-1-title-link"]').click();
+        await page.locator('[data-test="add-to-cart"]').click();
+    })
+
+
+    test('logout', async ({ page }) => {
+
+        await page.getByText('Swag Labs').click();
+        await page.getByRole('button', { name: 'Open Menu' }).click();
+        await page.locator('[data-test="logout-sidebar-link"]').click();
+
+        await page.close();
+    })
+
 })
