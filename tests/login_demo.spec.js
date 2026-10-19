@@ -1,19 +1,20 @@
 import { test, expect } from '@playwright/test'
+import { LoginPage } from '../pages/login'
 
-test('Demo login test 1', async ({ page }) => {
+test.only('Demo login test 1', async ({ page }) => {
 
-    await page.goto('https://demo.applitools.com/');
-    //await page.pause();
+  const Login = new LoginPage(page);
 
-    await page.locator('[placeholder="Enter your username"]').fill('Raghav');
-    await page.locator('[placeholder="Enter your password"]').fill('1234');
+  await Login.gotoLoginPage();
+  await Login.login('Raghav', '1234')
 
-    await page.waitForSelector('text=Sign in', { timeout: 5000 })
-    await page.locator('text=Sign in').click();
-
-    await page.locator('text=ACME').isVisible();
-
-
+  //await page.goto('https://demo.applitools.com/');
+  //await page.pause();
+  //await page.locator('[placeholder="Enter your username"]').fill('Raghav');
+  //await page.locator('[placeholder="Enter your password"]').fill('1234');
+  //await page.waitForSelector('text=Sign in', { timeout: 5000 })
+  //await page.locator('text=Sign in').click();
+  //await page.locator('text=ACME').isVisible();
 })
 
 
@@ -21,8 +22,10 @@ test('Demo login test 1', async ({ page }) => {
 
 test('Demo login test 2', async ({ page }) => {
 
-   await page.goto('https://opensource-demo.orangehrmlive.com/web/index.php/auth/login');
-   await page.pause();
+  const Login = new LoginPage()
+
+  await page.goto('https://opensource-demo.orangehrmlive.com/web/index.php/auth/login');
+  await page.pause();
 
   await page.getByRole('textbox', { name: 'Username' }).click();
   await page.getByRole('textbox', { name: 'Username' }).fill('Admin');
@@ -39,9 +42,9 @@ test('Demo login test 2', async ({ page }) => {
 
 
 
-test.only('Demo test login 3', async({page}) =>{
+test('Demo test login 3', async ({ page }) => {
 
-await page.goto('https://opensource-demo.orangehrmlive.com/web/index.php/auth/login');
+  await page.goto('https://opensource-demo.orangehrmlive.com/web/index.php/auth/login');
   await page.getByRole('textbox', { name: 'Username' }).click();
   await page.getByRole('textbox', { name: 'Username' }).fill('Admin');
   await page.getByRole('textbox', { name: 'Password' }).click();
